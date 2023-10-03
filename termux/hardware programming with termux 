@@ -1,0 +1,126 @@
+
+Hardware Programming with Termux 
+
+1. #On your android device, install apkpure app  https://m.apkpure.com/apkpure/com.apkpure.aegon 
+2. #Install Termux from apkpure  
+3. #Give termux access to your user directory in android
+       termux−setup−storage 
+
+  4. #Upgrade packages
+      apt update && apt upgrade
+      apt install build−essential openssh  
+  5. #Mandatory packages
+      apt install curl git wget subversion proot proot−distro python nmap neovim ranger 
+
+  6.  #Install Ubuntu on termux 
+      proot−distro install ubuntu 
+
+  7. #login Ubuntu on termux 
+     proot−distro login ubuntu 
+
+  8. #Install PlatformIO, GCC, Python3, Pip 
+     apt update && apt upgrade
+     apt install apt−utils build−essential cmake neovim
+     apt install git wget subversion imagemagick nano
+     apt install avra avrdude gcc−avr avr−libc 
+     apt install python3−pip python3−numpy python3−scipy python3−matplotlib python3−mpmath python3−sympy python3−cvxopt 
+     python -m pip install platform
+
+  9. #PlatformIO for Arduino copy and past it in platformIO folder
+      https://github.com/chiragshah1244/Future-Wireless-Communication-IITH/blob/main/Platformio/platformIO_arduino.ini
+
+  10. #PlatformIO for esp32 copy and past it in platformIO folder
+       https://github.com/chiragshah1244/Future-Wireless-Communication-IITH/blob/main/Platformio/platformIO_esp32.ini
+
+  11. #To build the code 
+        pio run
+
+  12.  #Installing Arduino Droid 
+         Install ArduinoDroid from apkpure 
+         #Open ArduinoDroid and grant all permissions 
+
+  13.  #To Flash Arduino
+         #Connect the Arduino to your phone via USB-OTG 
+         #For flashing the .hex file, in ArduinoDroid
+         #In Arduino app go to ->Actions−>Upload−>Upload Precompiled 
+         #then go to your working directory and select 
+         #pio->build->uno->firmware.hex for uploading hex file to the Arduino Uno.
+
+  14. #To Flash Esp32
+        #In ArduinoDroid app -> settings-> Board type->Esp32->DOIT ESP32 DEVKIT V1
+        #Connect the esp32 to your phone via USB-OTG 
+        #For flashing the .bin file, in esp32
+        #In Arduino app go to ->Actions−>Upload−>Upload Precompiled 
+        #then go to your working directory and select 
+        #pio->build->esp32doit-devkit—v1->firmware.bin for uploading bin file to the esp32.
+
+  15.  #Installing vim-plug
+          curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+          curl -fLo ~/.config/nvim/init.vim --create-dirs https://raw.githubusercontent.com/gadepall/termux/main/neovim/init.vim
+          #Enter plugin
+          nvim ~/.config/nvim/init.vim       
+          :PlugInstall
+          :qa!
+
+  16.  #Arm Programming  
+         #Login into ubuntu 
+         proot-distro login ubuntu 
+         apt update 
+         apt upgrade
+         #Install ssh-server
+         apt install openssh-server sshpass
+         # Install arm toolchain and hardware tools
+         apt install build-essential libssl-dev libffi-dev python3-dev bison flex git tcl-dev tcl-tclreadline libreadline-dev  autoconf libtool make automake texinfo pkg-config libusb-1.0-0 libusb-1.0-0-dev gcc-arm-none-eabi libnewlib-arm-none-eabi telnet python3 apt-utils libxslt-dev python3-lxml python3-simplejson cmake curl python3-pip
+         #Test the GNU RM GCC Embedded toolchain
+         arm-none-eabi-gcc --version
+         #Download the pygmy-sdk
+         cd /data/data/com.termux/files/home/
+         git clone --recursive https://github.com/optimuslogic/pygmy-dev
+         #Download the Blink program
+         cd /data/data/com.termux/files/home/
+         mkdir arm-examples
+         cd arm-examples
+         svn co https://github.com/gadepall/vaman/trunk/arm/codes/setup/blink
+         cd blink/GCC_Project
+         make -j4
+         #blink.bin should be generated in ouput/bin/ directory
+
+
+
+
+       
+
+        
+
+
+ 
+ 
+
+ 
+ 
+ 
+ 
+
+  
+
+       
+
+
+
+ 
+ 
+ 
+
+      
+      
+
+
+      
+
+ 
+  
+  
+  
+ 
+ 
+
