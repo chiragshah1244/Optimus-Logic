@@ -1,0 +1,148 @@
+% Input stream documentation
+
+\begin{verbatim}
+from nmea import input_stream
+\end{verbatim}
+
+This module contains three classes to handle input data for \projname.
+
+\subsubsection{SerialParity}
+
+Usable in place of PySerial constants:
+
+\begin{verbatim}
+    parity_none = serial.PARITY_NONE
+    parity_even = serial.PARITY_EVEN
+    parity_odd = serial.PARITY_ODD
+\end{verbatim}
+
+\subsubsection{SerialDataBits}
+
+Usable in place of PySerial constants:
+
+\begin{verbatim}
+    bits_five = serial.FIVEBITS
+    bits_six = serial.SIXBITS
+    bits_seven = serial.SEVENBITS
+    bits_eight = serial.EIGHTBITS
+\end{verbatim}
+
+\subsubsection{SerialStopBits}
+
+Usable in place of PySerial constants:
+
+\begin{verbatim}
+    stopbits_one = serial.STOPBITS_ONE
+    stopbits_two = serial.STOPBITS_TWO
+\end{verbatim}
+
+\subsubsection{SerialFlowControl}
+
+Usable in place of PySerial constants:
+
+\begin{verbatim}
+    off = serial.XOFF
+    on = serial.XON
+\end{verbatim}
+
+\subsubsection{GenericInputStream}
+
+Generic input stream. Extended by file and serial port inputs. \\
+
+\textbf{Function List}
+\begin{itemize}
+	
+	\item \textbf{open\_stream(path, baud, **kwargs)} (Static method)
+
+	Detects what type of input stream was specified and returns
+	the appropriate subclass of GenericInputStream. 
+
+	\paramslist{
+		path & Union[str, pathlib.Path] & File path or COM port \\
+		baud & int & Baud rate for serial port. Default 4800. \\
+		**kwargs & & Keyword arguments passed to \emph{SerialPort} constructor.
+	}
+
+	\item \textbf{enable\_raw\_recording(logpath)}
+
+	Enable recording raw NMEA input to a file for playback later.
+
+	\paramslist{
+		logpath & Union[str, pathlib.Path] & Location of output file
+	}
+
+	\item \textbf{disable\_raw\_recording}
+
+	Stop recording raw NMEA data to a file.
+
+	\item \textbf{get\_line} \\
+	Raises \emph{NotImplementedError}. No parameters.
+
+	\item \textbf{ensure\_open} \\
+	Raises \emph{NotImplementedError}. No parameters.
+
+	\item \textbf{ensure\_closed} \\
+	Raises \emph{NotImplementedError}. No parameters.	
+
+\end{itemize}
+
+\subsubsection{InputFileStream (extends GenericInputStream)}
+
+Reads input from a text file. File must contain a NMEA transcript \\
+
+\textbf{Function List}
+\begin{itemize}
+	
+	\item \textbf{\_\_init\_\_(path)} 
+
+	\emph{InputFileStream} constructor. Opens the specified file for reading.
+
+	\paramslist{
+		path & Union[str, pathlib.Path] & File path or COM port
+	}
+
+	\item \textbf{get\_line} (Return type \emph{bytes}) \\
+	Gets the next line in the file. In a properly formatted NMEA transcript,
+	this will be a single sentence. Returns the next line to pass the CRC. No parameters
+
+	\item \textbf{ensure\_open} \\
+	Opens the input file if it is closed.
+
+	\item \textbf{ensure\_closed} \\
+	Closes the input file if open. no parameters.
+
+\end{itemize}
+
+
+\subsubsection{SerialPort (extends GenericInputStream)}
+
+Reads input from a GNSS receiver connected via serial port. \\
+
+\textbf{Function List}
+\begin{itemize}
+	
+	\item \textbf{\_\_init\_\_(path, baud, **kwargs)}
+
+	\emph{InputFileStream} constructor. Opens the specified file for reading.
+
+	\paramslist{
+		path & Union[str, pathlib.Path] & File path or COM port \\
+		baud & int & Baud rate of receiver. Default 4800 \\
+		**kwargs & & Keyword arguments for other settings.
+	}
+
+	Refer to PySerial documentation\footnote{\url{https://pyserial.readthedocs.io/en/latest/pyserial.html}}
+	for allowable keyword arguments that may be used to configure the serial port.
+
+	\item \textbf{get\_line} (Return type \emph{bytes}) \\
+	Returns all data to be received on the port until the next line feed. Data must pass a CRC check. No parameters.
+
+	\item \textbf{ensure\_open} \\
+	Open the serial port if not already open. No parameters given
+
+	\item \textbf{ensure\_closed} \\
+	Closes the serial port if it is open. No parameters.
+
+\end{itemize}
+
+

@@ -1,0 +1,131 @@
+\documentclass{report} % CHANGE AS NEEDED
+
+\usepackage{nmeaparser}
+
+\newcommand{\projname}{NMEA Parser}
+\newcommand{\version}{Version $0.5.0$}
+
+\title{\projname \version}
+\author{Brendan Kristiansen}
+\date{Compiled on \today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\chapter{Introduction}
+
+\section{About NMEA Parser}
+
+\projname is a Python library used to decode NMEA data from GNSS receivers.
+More information is available at \url{https://www.bek.sh/nmea-parser}.
+Source code is available at \url{https://www.gitlab.com/bek3/nmea_parser}
+
+\section{Bug Reports and Feature Requests}
+
+To report a bug, make a feature request, or to have a question answered, please leave a ticket on this
+project's Gitlab issue tracker or email either \emph{b@bek.sh} or
+\emph{incoming+bek3-nmea-parser-20880828-issue-@incoming.gitlab.com}.
+
+\section{Testing}
+
+The following GNSS receivers have been confirmed to successfully produce live data using \projname.
+
+\begin{itemize}
+	\item U-BLOX UB-6010 
+	\item U-BLOX ZED-F9P-00B-02
+	\item Origin ORG4572
+\end{itemize}
+
+If you have a GNSS receiver that is not listed and you have confirmed works with 100\% of the
+functionality offered with \projname, please let me know using one of the methods above!
+
+\section{License}
+\projname is licensed under the Mozilla Public License Version $2.0$\footnote{\url{https://www.mozilla.org/en-US/MPL/2.0/}}
+
+\newpage
+\section{Changelog}
+
+\changelogentry{0.5.0}{2021-06-28}{
+	\changelogitem{Fix bug where variable is referenced prior to assignment.}
+	\changelogitem{Stop allowing sats in view messages to be pushed onto data frames when too many exist}
+}
+
+\changelogentry{0.4.0}{2021-06-22}{
+	\changelogitem{Add support for PySerial's non-standard port settings}
+	\changelogitem{Add support for console output via Python's logging module}
+	\changelogitem{Make all NMEA Messages in a dataframe publicly accessable}
+	\changelogitem{Remove unused return type from push back message in the \emph{DataFrame} class}
+}
+
+\changelogentry{0.3.0}{2021-06-06}{
+	\changelogitem{Make individual SV observations publicly accessable from the \emph{DataFrame} Class}
+	\changelogitem{Replace usages of the string "NULL" with \emph{None}}
+}
+
+\changelogentry{0.2.1}{2021-06-02}{
+	\changelogitem{Fix bug that would crash the library if a stream starts with no GPS fix}
+}
+
+\changelogentry{0.2.0}{2021-06-01}{
+	\changelogitem{Add ability to record a raw text dump of an incoming NMEA stream}
+	\changelogitem{Majorly simplify the built in logging module}
+	\changelogitem{Completely depreciate the nmea parser module.}
+	\changelogitem{Fix a bug where NMEA sentences without a fix threw an index error}
+	\changelogitem{Clean source code}
+}
+
+\changelogentry{0.1.2}{2021-05-25}{
+	\changelogitem{Resolve error that led to ``inappropriate ioctl for device'' from serial library}
+}
+
+\changelogentry{0.1.1}{2021-05-24}{
+	\changelogitem{Improve safety of file handling inside of Input Stream module}
+	\changelogitem{Switch internal input statements to relative, resolving problems for people using this project
+		as a submodule}
+	\changelogitem{Resolve minor bugs in type checking}
+	\changelogitem{Correct errors in documentation}
+}
+
+\changelogentry{0.1.0}{2021-05-20}{
+	\changelogitem{Initial release}
+}
+
+\chapter{Usage}
+
+\section{Installation}
+\input{body/installation}
+
+\section{Documentation}
+
+All code in this library is available in the \emph{nmea} package.
+
+\subsection{Input Stream Module}
+\input{body/input-stream}
+
+\newpage	% get rid of ugly pagebreak
+\subsection{Data Frame}
+\input{body/data-frame}
+
+\newpage
+\subsection{NMEA Message}
+\input{body/nmea-message}
+
+\newpage
+\subsection{SV Observation}
+\input{body/sv-obs}
+
+\subsection{Database Wrapper}
+\input{body/dbwrapper}
+
+\section{Examples}
+
+The following examples should help you get started with \projname.
+\input{body/examples}
+
+\chapter{Extras}
+
+\section{NMEA Reference}
+\input{body/nmea-reference}
+
+\end{document}

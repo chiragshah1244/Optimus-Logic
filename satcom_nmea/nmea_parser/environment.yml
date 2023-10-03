@@ -1,0 +1,7 @@
+name: nmea-parser
+channels:
+  - defaults
+dependencies:
+  - pyserial
+prefix: /home/b/anaconda3/envs/nmea-parser
+

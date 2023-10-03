@@ -1,0 +1,33 @@
+% Space vehicle observation
+
+\begin{verbatim}
+from nmea import sv_obs
+\end{verbatim}
+
+
+\subsubsection{SVObservation}
+
+Contains information on an observation of a single space vehicle at a
+point in time.
+
+\textbf{Function List}
+\begin{itemize}
+	\item \textbf{\_\_init\_\_(prn, elev, azimuth, snr)}
+
+		\paramslist{
+			gpst & str & GPS Timestamp of observation (YYYY-MM-DD HH:MM:SS). \\
+			prn & int & PRN/ID of satellite \\
+			elev & float & Elevation of satellite above the horizon \\
+			azimuth & float & Azimuth of satellite \\
+			snr & float & Signal to noise ratio of satellite
+		}
+
+\end{itemize}
+
+\proplist{
+	gpst & str & Timestamp of observation \\
+	prn & int & Satellite PRN or ID \\
+	elevation & float & Satellite elevation above horizon \\
+	azimuth & float & Azimuth of satellite \\
+	snr & float & Signal to noise ratio of satellite
+}

@@ -1,0 +1,65 @@
+% Data Frame documentation
+
+\begin{verbatim}
+from nmea import data_frame
+\end{verbatim}
+
+\subsubsection{DataFrame}
+
+Contains a snapshot of GNSS data. \\
+
+\textbf{Function List}
+
+\begin{itemize}
+	\item \textbf{\_\_init\_\_(fix=None, gnss=None, active=None, inview=None, rmc=None, latlon=None, vel=None)}
+
+		All arguments provided to the \emph{DataFrame} constructor are optional and default to None.
+
+		\paramslist{
+			fix & \emph{NMEAFixMessage} & GGA Message \\
+			gnss & \emph{GNSSFixData} & GNS Message \\
+			active & \emph{NMEADOPActiveSatsMessage} & GSA Message \\
+			inview & List[\emph{NMEASatsInviewMessage}] & GSV Message \\
+			rmc & \emph{NMEARMCMessage} & RMC Message \\
+			latlon & \emph{NMEALatLonMessage} & GLL Message \\
+			vel & \emph{NMEAVelocityMessage} & VTG Message
+		}
+	
+	\item \textbf{get\_next\_frame} \classmethod
+
+		Capture an entire data frame from a NMEA input stream. This function does not handle errors decoding
+		NMEA sentences, so a \emph{ValueError} may be thrown from inside. It is suggested this function is surrounded
+		in a try/except block that explicitly handles \emph{ValueError}.
+		
+		\paramslist{
+			stream & \emph{GenericInputStream} & Input stream to receive sentences from \\
+			debug & bool & Indicate to dump NMEA to console. Default false.
+		}
+
+	\item \textbf{push\_back\_message}
+
+		Add a message to the data frame.
+
+		\paramslist{
+			msg & \emph{NMEAMessage} & An instance of a message
+		}
+
+\item \textbf{is\_complete} \returns{bool}
+
+		Determine if the data frame had all necessary variables filled.
+
+\end{itemize}
+
+\proplist{
+		gps\_time & str & UTC date and time of fix \\
+		velocity & float & Velocity at fix \\
+		track & float & Direction of travel \\
+		latitude & float & Latitude of fix \\
+		longitude & float & Longitude of fix \\
+		altitude & float & Altitude of fix \\
+		fix\_quality & str & Fix quality in the \emph{NMEAFixMessage} \\
+		nsats & int & Number of satellites used to calculate fix \\
+		sv\_observations & List[\emph{SVObservation}] & All satellite observations at the moment \\
+		all\_messages & List[\emph{NMEAMessage}] & List of all contained NMEA Messages
+}
+

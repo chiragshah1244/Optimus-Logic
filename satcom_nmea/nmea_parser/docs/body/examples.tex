@@ -1,0 +1,106 @@
+% NMEA Parser Examples
+
+\subsection{Opening and Reading a Serial Port}
+
+It is highly sugested that you use all input streams within a context manager as shown below.
+
+\begin{verbatim}
+from nmea import input_stream
+
+stream = input_stream.GenericInputStream.open_stream('/dev/ttyACM0', 9600)
+
+print(stream)
+
+with stream:
+    print(stream.get_line())
+\end{verbatim}
+
+If you must use an input stream without a context manager, make sure that the \emph{ensure\_closed()} function
+is called prior to exit:
+
+\begin{verbatim}
+from nmea import input_stream
+
+stream = input_stream.GenericInputStream.open_stream('/dev/ttyACM0', 9600)
+
+print(stream)
+print(stream.get_line())
+stream.ensure_closed()      # You must not forget to manually close the stream.
+\end{verbatim}
+
+Using a context manager ensures that the port is always closed should your program halt unexpectedly.
+
+\subsection{Opening and Reading a Text File}
+
+Text files containing NMEA streams may also be used with this library. Just point the \emph{open\_stream()} function at
+the desired file:
+
+\begin{verbatim}
+from nmea import input_stream, data_frame
+
+stream = input_stream.GenericInputStream.open_stream('sample-data/sample1.txt')
+
+with stream:
+    new_frame = data_frame.DataFrame.get_next_frame(stream)
+
+    print("Current GPS time:", new_frame.gps_time)
+    print("Current Latitude:", new_frame.latitude)
+    print("Current Longitude:", new_frame.longitude)
+    print("Current Speed:", new_frame.velocity)
+    print("Current heading:", new_frame.track)
+\end{verbatim}
+
+\newpage
+\subsection{Getting Position Data and Logging to a Database}
+
+The \emph{DataFrame} object contains properties that allow you to access your current position, movement, and
+information on all satellites used to calculate your fix. The logging module allows you to record these objects in an
+SQLite database.
+
+
+\begin{verbatim}
+from nmea import input_stream, data_frame, logging
+
+stream = input_stream.GenericInputStream.open_stream('/dev/ttyACM0', 9600)
+
+db = logging.SQLiteConnection.from_path('./example.sqlite')
+
+print(stream)
+
+with stream:
+    while True:
+        try:
+            new_frame = data_frame.DataFrame.get_next_frame(stream)
+        except ValueError:
+            print('Problem decoding message to get data frame.')
+
+        print("Current GPS time:", new_frame.gps_time)
+        print("Current Latitude:", new_frame.latitude)
+        print("Current Longitude:", new_frame.longitude)
+        print("Current Speed:", new_frame.velocity)
+        print("Current heading:", new_frame.track)
+        print("Number of Satellites above:", new_frame.nsats)
+        print("Individual Observations:")
+        for obs in new_frame.sv_observations:
+            print('\tPRN:', obs.prn)
+            print('\t\tSignal to Noise:', obs.snr)
+            print('\t\tAzimuth:', obs.azimuth)
+            print('\t\tElevation:', obs.elevation)
+
+        db.insert_dataframe(new_frame)
+\end{verbatim}
+
+\subsection{Allowing NMEA Parser to print messages to the console}
+
+NMEA Parser makes use of Python's built in logging facility to print messages. By default, the library suppresses
+all output below the \emph{WARNING} level. You may set the log level higher or lower by following the below example.
+
+\begin{verbatim}
+
+import logging
+
+from nmea import util
+
+util.set_log_level(logging.INFO)
+
+\end{verbatim}

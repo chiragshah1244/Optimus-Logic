@@ -1,0 +1,59 @@
+%% General LaTeX style for Brendan Kristiansen
+
+\usepackage[margin=1.0in]{geometry}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{setspace}
+\usepackage{color}
+\usepackage{hhline}
+\usepackage{amssymb}
+\usepackage{amsmath}
+
+\graphicspath{{images/}}
+
+% Source: https://latexcolor.com/
+\definecolor{amber}{rgb}{1.0, 0.75, 0.0}
+\definecolor{applegreen}{rgb}{0.55, 0.71, 0.0}
+\definecolor{armygreen}{rgb}{0.29, 0.33, 0.13}
+\definecolor{azure}{rgb}{0.0, 0.5, 1.0}
+
+\newcommand{\classmethod}{{\color{blue}(Class Method)}}
+\newcommand{\staticmethod}{{\color{armygreen}(Static Method)}}
+\newcommand{\returns}[1]{{\color{azure}(Return type #1)}}
+
+\newcommand{\todo}[1]{{\color{red}[[\textbf{TODO: }#1]]}}
+\newcommand{\figref}[1]{Figure~\ref{fig:#1}}
+
+\setlength{\parindent}{0pt}
+
+\newcommand{\changelogentry}[3]{
+	\textbf{Version #1} \\
+	\emph{Released #2} \\
+	\begin{itemize}
+					#3
+	\end{itemize}
+}
+
+\newcommand{\changelogitem}[1]{\item #1}
+
+\newcommand{\paramslist}[1]{
+	\begin{tabular}{||l|l|l||}
+		\hline
+		\textbf{Parameter name} & \textbf{Type} & \textbf{Description} \\
+		\hline
+		#1 \\
+		\hline
+	\end{tabular}
+}
+
+\newcommand{\proplist}[1]{
+	\textbf{Properties:} \\
+	\begin{tabular}{||l|l|l||}
+			\hline
+			\textbf{Property Name} & \textbf{Type} & \textbf{Description} \\
+			\hline
+			#1 \\
+			\hline
+	\end{tabular}
+}
+

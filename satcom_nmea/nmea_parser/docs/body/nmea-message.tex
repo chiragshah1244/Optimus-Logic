@@ -1,0 +1,216 @@
+% NMEA Message documentation
+
+\begin{verbatim}
+from nmea import nmea_message
+\end{verbatim}
+
+
+\subsubsection{NMEAMessage}
+
+Generic NMEA message. Only used when \projname does not recognize a message.
+Recognized messages will be instances of classes that extend NMEAMessage. \\
+
+\textbf{Function List}
+\begin{itemize}
+	
+	\item \textbf{\_\_init\_\_(raw\_message)}
+
+	\paramslist{
+		raw\_message & bytes & Encoded string of nmea message 
+	}
+
+	\item \textbf{break\_mesage} \staticmethod \returns{list} \\
+	Breaks a message at commas. Returns a list of each section.
+
+	\paramslist{
+		msg & bytes & Encoded NMEA string
+	}
+
+	\item \textbf{load\_message} \staticmethod \returns{NMEAMessage} \\
+	Read a NMEA string and return an instance of \emph{NMEAMessage}.
+
+	\paramslist{
+		msg & bytes & Encoded NMEA string
+	}
+
+	\item \textbf{get\_sentence} \returns{str}
+	Return a decoded string containing the original NMEA message. No parameters.
+
+\end{itemize}
+
+\subsubsection{NMEAFixMessage}
+
+GPS Fix data
+
+\textbf{Function List}
+\begin{itemize}
+	
+	\item \textbf{\_\_init\_\_(raw\_message)}
+
+	\paramslist{
+		raw\_message & bytes & Encoded string of nmea message
+	}
+
+\end{itemize}
+
+
+\proplist{
+    gpst\_utc & str & UTC time of fix \\
+	altitude & float & Height over WGS84 \\
+	fix\_quality & int & 0 = invalid, 1 = GPS, 2 = DGPS\\
+	sv\_count & int & Number of satellites used to calculate fix \\
+	alt\_unit & str & Units used for altitude
+}
+
+\subsubsection{GNSSFixData}
+
+Current information on the GNSS Fix
+
+\textbf{Function List}
+\begin{itemize}
+
+	\item \textbf{\_\_init\_\_(raw\_message)}
+
+	\paramslist{
+		raw\_message & bytes & Encoded string of nmea message
+	}
+
+\end{itemize}
+
+
+\proplist{
+	latitude & float & Latitude of fix \\
+	longitude & float & Longitude of fix \\
+	mode & str & Mode indicator. See \ref{gns-extra} \\
+	sv\_count & int & Number of satellites used to calculate fix \\
+	hdop & float & Horizontal dilution of precision \\
+	ortho\_height & float & Orthometric height in meters \\
+	geoidal\_sep & float & Geoidal separation in meters \\
+	diff\_age & float & Age of differential data \\
+	stat\_id & float & Reference station ID
+
+}
+
+\subsubsection{NMEADOPActiveSatsMessage}
+
+Contains current dilution of precision and information on all PRNs being tracked.
+
+\textbf{Function List}
+\begin{itemize}
+	
+	\item \textbf{\_\_init\_\_(raw\_message)}
+
+	\paramslist{
+		raw\_message & bytes & Encoded string of nmea message
+	}
+
+\end{itemize}
+
+
+\proplist{
+	fix\_mode & str & Fix mode (M = manual, A = Automatic 2/3D) \\
+	ndims & int & Number of dimensions \\
+	prns & list & List of SV PRNs included in fix \\
+	pdop & float & Position dilution of precision \\
+	hdop & float & Horizontal dilution of precision \\
+	vdop & float & Vertical dilution of precision 
+}
+
+\subsubsection{NMEASatsInViewMessage}
+
+Detailed information on individual satellite observations. This message
+is always part of a series.
+
+\textbf{Function List}
+\begin{itemize}
+	
+	\item \textbf{\_\_init\_\_(raw\_message)}
+
+	\paramslist{
+		raw\_message & bytes & Encoded string of nmea message
+	}
+
+\end{itemize}
+
+
+\proplist{
+	sentence\_count & int & Number of sentences in sequence \\
+	sentence\_number & int & Position of sentence in sequence \\
+	sv\_count & int & Number of SVs in solution \\
+	observations & List[\emph{SVObservation}] & List of observation objects
+}
+\subsubsection{NMEARMCMessage}
+
+Recommended minimum specific GPS/Transit data.
+
+\textbf{Function List}
+\begin{itemize}
+	
+	\item \textbf{\_\_init\_\_(raw\_message)}
+
+	\paramslist{
+		raw\_message & bytes & Encoded string of nmea message
+	}
+
+\end{itemize}
+
+
+\proplist{
+	fix\_date & Date of fix & GPS Date \\
+	fix\_time & UTC Time of fix & GPS Time \\
+	latitude & float & Recommended minimum latitude \\
+	longitude & float & Recommended minimum longitude \\
+	speed\_kts & float & Current speed in knots \\
+	speed\_ms & float & Current speed in meters per second \\
+	track & float & Current track in degrees \\
+	variation & float & Magnetic variation in degrees \\
+	status & str & Validity (A - ok or V - invalid)
+}
+
+\subsubsection{NMEALatLonMessage}
+
+Geographic latitude and longitude, time
+
+\textbf{Function List}
+\begin{itemize}
+	
+	\item \textbf{\_\_init\_\_(raw\_message)}
+
+	\paramslist{
+		raw\_message & bytes & Encoded string of nmea message
+	}
+
+\end{itemize}
+
+
+\proplist{
+	latitude & float & Current latitude \\
+	longitude & float & Current longitude \\
+	fix\_time & str & Fix UTC time \\
+	status & str & Validity (A - ok or V - invalid)
+}
+
+\subsubsection{NMEAVelocityMessage}
+
+Track made good and ground speed
+
+\textbf{Function List}
+\begin{itemize}
+	
+	\item \textbf{\_\_init\_\_(raw\_message)}
+
+	\paramslist{
+		raw\_message & bytes & Encoded string of nmea message
+	}
+
+\end{itemize}
+
+
+\proplist{
+	true\_track & float & Current track relative to true north \\
+	mag\_track & float & Current track relative to magnetic north \\
+	velocity\_kmh & float & Current velocity in Km per second \\
+	velocity\_kts & float & Current velocity in knots \\
+	velocity\_ms & float & Current velocity in meters per second 
+}
+

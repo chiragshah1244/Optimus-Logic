@@ -1,0 +1,48 @@
+% Documentation for the NMEA parser datanase wra[[er
+
+\subsubsection{GenericDBConnection}
+
+\textbf{Function list}
+\begin{itemize}
+	\item \textbf{\_\_init\_\_(connection)}
+
+	\paramslist{
+		connection & sqlite3.Connection or similar & Instance of a database connection
+	}
+
+	\item \textbf{execute(stmt)}
+
+	Execute an SQL statement. Replace None with 'NULL'.
+
+	\paramslist{
+		stmt & str & SQL Statement to execute.
+	}
+	\item \textbf{insert\_dataframe(frame)}
+
+	Record a \emph{DataFrame} in the database. The object does not have to be complete.
+
+	\paramslist{
+		frame & \emph{DataFrame} & Instance of \emph{DataFrame} to record
+	}
+
+	\item \textbf{insert\_sv\_obs(obs)}
+
+	Record a \emph{SVObservation} in the database.
+
+	\paramslist{
+		obs & \emph{SVObservation} & Instance of \emph{SVObservation} to record
+	}
+
+\end{itemize}
+
+\subsubsection{SQLiteConnection (extends GenericDBConnection)}
+
+\textbf{Function List}
+\begin{itemize}
+	\item \textbf{from\_path(path)} \classmethod
+
+	\paramslist{
+		path & Union[str, pathlib.Path] & Path to the desired SQLite database
+	}
+
+\end{itemize}

@@ -1,0 +1,31 @@
+% Miscellaneous NMEA reference info
+
+This section contains miscellaneous information useful in understanding
+this library.
+
+\subsection{GNSSFixData Mode Indicator} \label{gns-extra}
+
+This field contains multiple characters, each corresponding to different constellations:
+
+\begin{enumerate}
+	\item GPS (United States of America)
+	\item GLONASS (Russia)
+\end{enumerate}
+
+The letters indicate the following: \\
+
+\begin{tabular}{|l l|}
+	N & No fix. Constellation is not used in fix or fix is bad \\
+	A & Autonomous. Constellation is used in non-differential mode \\
+	D & Constellation is used in differential mode \\
+	P & Precise. Constellation is used in precision mode. \\
+	R & Real Time Kinematic. Constellation is in RTK mode with fixed integers \\
+	F & RTK with floating point numbers \\
+	E & Estimated (dead reckoning) Mode \\
+	M & Manual input mode \\
+	S & Simulation \\
+\end{tabular}
+\\
+
+For more information, visit \url{https://www.trimble.com/OEM_ReceiverHelp/V4.44/en/NMEA-0183messages_GNS.html}.
+
