@@ -83,44 +83,4 @@ Hardware Programming with Termux
          svn co https://github.com/gadepall/vaman/trunk/arm/codes/setup/blink
          cd blink/GCC_Project
          make -j4
-         #blink.bin should be generated in ouput/bin/ directory
-
-
-
-
-       
-
-        
-
-
- 
- 
-
- 
- 
- 
- 
-
-  
-
-       
-
-
-
- 
- 
- 
-
-      
-      
-
-
-      
-
- 
-  
-  
-  
- 
- 
-
+         #blink.bin should be generated in ouput/bin/ directory.
